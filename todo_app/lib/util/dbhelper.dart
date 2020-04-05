@@ -67,7 +67,7 @@ class DbHelper {
       where: "$colId = ?", whereArgs: [todo.id]);
     return result;
   }
-
+ 
   Future<int> deleteTodo(int id) async {
     int result;
     var db = await this.db;

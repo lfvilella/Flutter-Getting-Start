@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import './screens/home.dart';
+import 'package:flare_flutter/flare_actor.dart';
 
 // Its de same way to rewrite the method main: void main() => runApp(new HelloFlutterApp());
 void main() {
@@ -16,7 +17,14 @@ class HelloFlutterApp extends StatelessWidget {
           appBar: AppBar(
             title: Text("Title in App Bar!!!"),
           ),
-          body: Home()
+          // body: Home()
+          // body: HelloText()
+          body: Center(
+            child: FlareActor("anim/jackOLantern.flr",
+            alignment: Alignment.center,
+            fit: BoxFit.contain,
+            animation: "Untitled",
+          )),
         ));
   }
 }

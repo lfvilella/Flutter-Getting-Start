@@ -7,6 +7,7 @@ import 'package:flutter/src/rendering/custom_paint.dart';
 import 'package:flutter/src/rendering/custom_paint.dart';
 import 'package:flutter/src/widgets/basic.dart';
 // import 'package:demo_container/screens/tiger.dart';
+// import 'package:demo_container/screens/area_calc.dart';
 
 void main() => runApp(MyApp());
 
@@ -14,216 +15,99 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Area Calculator App',
+      title: 'Stack',
       home: Scaffold(
-        appBar: AppBar(
-          title: Text('Area Calculator'),
-        ),
-        // body: TigerContainer(),
-        body: AreaCalculator(),
-      ),
+          appBar: AppBar(
+            title: Text('AppBar Stack'),
+          ),
+          // body: TigerContainer(),
+          body: HomePizza()),
     );
   }
 }
 
-class AreaCalculator extends StatefulWidget {
-  @override
-  _AreaCalculatorState createState() => _AreaCalculatorState();
-}
-
-class _AreaCalculatorState extends State<AreaCalculator> {
-  List<String> shapes = ['Rectangle', 'Triangle'];
-  String currentShape;
-  String result = '0';
-  double width = 0;
-  double height = 0;
-
-  final TextEditingController widthController = TextEditingController();
-  final TextEditingController heightController = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-    result = '0';
-    currentShape = 'Rectangle';
-    widthController.addListener(updateWidth);
-    heightController.addListener(updateHeight);
-  }
-
+class HomePizza extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final sizeX = MediaQuery.of(context).size.width;
+    final sizeY = MediaQuery.of(context).size.height;
+
     return Container(
-      margin: EdgeInsets.only(top: 15),
-      child: SingleChildScrollView(
+      width: sizeX,
+      height: sizeY,
+      child: Stack(
+        children: showPizzaLayout(sizeX, sizeY),
+      ),
+    );
+  }
+
+
+  List<Widget> showPizzaLayout(double sizeX, double sizeY) {
+    List<Widget> layoutChildren = List<Widget>();
+    Container backGround = Container(
+      decoration: BoxDecoration(
+          image: DecorationImage(
+        image: NetworkImage('http://bit.ly/pizzaimage'),
+        fit: BoxFit.fitHeight,
+      )),
+    );
+    layoutChildren.add(backGround);
+
+    Positioned pizzaCard = Positioned(
+      top: sizeY / 20,
+      left: sizeX / 20,
+      child: Card(
+        elevation: 12,
+        color: Colors.white70,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
         child: Column(
-          children: <Widget>[
-            // Dropdown BTN
-            DropdownButton<String>(
-                value: currentShape,
-                items: shapes.map((String value) {
-                  return new DropdownMenuItem(
-                    value: value,
-                    child: Text(
-                      value,
-                      style: TextStyle(fontSize: 24),
-                    ),
-                  );
-                }).toList(),
-                onChanged: (shape) {
-                  setState(() {
-                    currentShape = shape;
-                  });
-                }),
-            // Shape
-            ShapeContainer(shape: currentShape,),
-
-            // Width
-            AreaTextField(controller: widthController, hint: 'Width'),
-            //height
-            AreaTextField(controller: heightController, hint: 'Height'),
-
-            Container(
-              margin: EdgeInsets.all(15),
-              child: RaisedButton(
-                child: Text(
-                  'Calculate Area',
-                  style: TextStyle(fontSize: 18),
-                ),
-                onPressed: calculateArea,
+          children: [
+            Text(
+              "Pizza Margherita",
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Colors.deepOrange,
               ),
             ),
-            Text(
-              result,
-              style: TextStyle(fontSize: 24, color: Colors.green[700]),
+            Padding(
+              padding: EdgeInsets.all(12),
+              child: Text(
+                "This delicious pizza is made of tomato,\n mozzarela and bazil. \n\n Seriously you can\'t miss it!",
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.grey[800],
+                ),
+              ),
             )
           ],
         ),
       ),
     );
-  }
+    layoutChildren.add(pizzaCard);
 
-  void calculateArea() {
-    double area;
-
-    if (currentShape == 'Rectangle') {
-      area = width * height;
-    } else if (currentShape == 'Triangle') {
-      area = (width * height) / 2;
-    } else {
-      area = 0;
-    }
-
-    setState(() {
-      result = 'The area is ' + area.toString();
-    });
-  }
-
-  void updateWidth() {
-    setState(() {
-      if (widthController.text != '') {
-        width = double.parse(widthController.text);
-      } else {
-        width = 0;
-      }
-    });
-  }
-
-  void updateHeight() {
-    setState(() {
-      if (heightController.text != '') {
-        height = double.parse(heightController.text);
-      } else {
-        height = 0;
-      }
-    });
-  }
-}
-
-class AreaTextField extends StatelessWidget {
-  AreaTextField({this.controller, this.hint});
-
-  final TextEditingController controller;
-  final String hint;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.all(15),
-      child: TextField(
-        controller: controller,
-        keyboardType: TextInputType.number,
-        style: TextStyle(
-          color: Colors.green[700],
-          fontWeight: FontWeight.w300,
-          fontSize: 24,
+    Positioned buttonOrder = Positioned(
+      bottom: sizeY / 20,
+      left: sizeX / 20,
+      width: sizeX - (sizeX / 10),
+      child: RaisedButton(
+        elevation: 12,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        color: Colors.orange[900],
+        child: Text(
+          'Order Now!',
+          style: TextStyle(
+            fontSize: 20,
+            color: Colors.white,
+          ),
         ),
-        decoration: InputDecoration(
-          prefixIcon: (this.hint == 'Width')
-              ? Icon(Icons.border_bottom)
-              : Icon(Icons.border_left),
-          filled: true,
-          fillColor: Colors.grey[300],
-          hintText: hint,
-        ),
+        onPressed: () {},
       ),
     );
-  }
-}
+    layoutChildren.add(buttonOrder);
 
-class ShapeContainer extends StatelessWidget {
-  final String shape;
-
-  const ShapeContainer({Key key, this.shape}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    if (shape == 'Triangle') {
-      return CustomPaint(
-        size: Size(100, 100),
-        painter: TrianglePainter(),
-      );
-    }
-    else {
-      return CustomPaint(
-        size: Size(100, 100),
-        painter: RectanglePainter(),
-      );
-    }
-  }
-}
-
-class TrianglePainter extends CustomPainter{
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint();
-    paint.color = Colors.deepOrange;
-
-    var path = Path();
-    path.moveTo(size.width/2, 0);
-    path.lineTo(size.width, size.height);
-    path.lineTo(0, size.height);
-    path.close();
-    canvas.drawPath(path, paint);
-  }
-
-  @override
-  bool shouldRepaint(CustomPainter oldDelegate) {
-    return true;
-  }
-}
-
-class RectanglePainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint();
-    paint.color = Colors.deepPurple;
-
-    Rect rect = Rect.fromLTRB(0, size.height/4, size.width, size.height/4*3);
-    canvas.drawRect(rect, paint);
-  }
-
-  @override
-  bool shouldRepaint(CustomPainter oldDelegate) {
-    return true;
+    return layoutChildren;
   }
 }

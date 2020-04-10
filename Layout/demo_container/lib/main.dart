@@ -35,12 +35,62 @@ class HomePizza extends StatelessWidget {
     return Container(
       width: sizeX,
       height: sizeY,
-      child: Stack(
-        children: showPizzaLayout(sizeX, sizeY),
+      child: ListView(
+        children: showContacts(),
       ),
     );
   }
 
+  List<Widget> createSquares(int numSquare) {
+    int idx = 0;
+    List colors = [
+      Colors.amber,
+      Colors.deepPurple,
+      Colors.deepOrange,
+      Colors.indigo,
+      Colors.lightBlue
+    ];
+    List<Widget> squares = List<Widget>();
+
+    while (idx < numSquare) {
+      Container square = Container(
+        color: colors[idx % 5],
+        // width: 100,
+        height: 100,
+        child: Text(idx.toString()),
+      );
+      idx++;
+      squares.add(square);
+    }
+
+    return squares;
+  }
+
+  Widget createSquare(int position) {
+    List colors = [
+      Colors.amber,
+      Colors.deepPurple,
+      Colors.deepOrange,
+      Colors.indigo,
+      Colors.lightBlue
+    ];
+
+    Container square = Container(
+      color: colors[position % 5],
+      width: 100,
+      height: 100,
+      child: Text(position.toString()),
+    );
+    return square;
+  }
+
+  Widget createSeparetor(int position) {
+    Container separator = Container(
+      height: 15,
+      color: Colors.black,
+    );
+    return separator;
+  }
 
   List<Widget> showPizzaLayout(double sizeX, double sizeY) {
     List<Widget> layoutChildren = List<Widget>();
@@ -110,4 +160,44 @@ class HomePizza extends StatelessWidget {
 
     return layoutChildren;
   }
+
+  List<Contact> buildContacts() {
+    List<Contact> contacts = List<Contact>();
+    contacts.add(Contact('Thomas', 'The Matrix', Icons.sentiment_neutral));
+    contacts.add(Contact('Max', 'The Maaxx', Icons.sentiment_satisfied));
+    contacts.add(Contact('Jesse', 'The Helper', Icons.sentiment_dissatisfied));
+    contacts.add(Contact('Mr White', 'The Meth', Icons.sentiment_very_satisfied));
+    contacts.add(Contact('Turing', 'The Machine', Icons.sentiment_very_dissatisfied));
+    return contacts;
+  }
+
+  List<ListTile> showContacts(){
+    List<Contact> contacts = buildContacts();
+    for (var i = 0; i < 20; i++) {
+      contacts.addAll(buildContacts());
+    }
+
+    List<ListTile> list = List<ListTile>();
+    contacts.forEach((contact) {
+      list.add(ListTile(
+        title: Text(contact.name),
+        subtitle: Text(contact.subtitle),
+        leading: CircleAvatar(
+          child: Icon(contact.icon),
+          backgroundColor: Colors.amber[600],
+        ),
+        trailing: Icon(Icons.keyboard_arrow_right),
+        onTap: () => true,
+      ));
+    });
+    return list;
+  }
+}
+
+class Contact {
+  String name;
+  String subtitle;
+  IconData icon;
+
+  Contact(this.name, this.subtitle, this.icon);
 }

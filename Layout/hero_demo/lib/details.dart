@@ -12,12 +12,18 @@ class Details extends StatelessWidget {
   Widget build(BuildContext context) {
     timeDilation = 3;
     double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+
+    pop(){
+      Navigator.of(context).pop();
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Hero Animation'),
       ),
       body: Center(
-        child: Util.buildHeroDestination(drinkPath, drinkTag, width),
+        child: Util.buildHeroRadialDestination(drinkPath, drinkTag, width, height, pop),
       ),
     );
   }

@@ -1,0 +1,29 @@
+{
+  "events": [
+    {
+      "title": "Release RN course",
+      "date": "2020-06-15T00:00:00.000Z",
+      "id": "05dafc66-bd91-41a0-a752-4dc40f039144"
+    },
+    {
+      "title": "Release RN course",
+      "date": "2020-06-15T00:00:00.000Z",
+      "id": "05dafc66-bd91-41a0-a222-4dc40f039144"
+    },
+    {
+      "title": "Eae",
+      "date": "2020-09-15T02:02:52.331Z",
+      "id": "6d4fe58d-bd29-4255-ba32-041b60fa7b94"
+    },
+    {
+      "title": "New test event",
+      "date": "2020-09-15T23:18:00.000Z",
+      "id": "fded4e42-8cc7-4b9a-ae65-d645426d41f7"
+    },
+    {
+      "title": "Create",
+      "date": "2020-09-15T11:18:39.713Z",
+      "id": "dd924bdb-abf9-4a89-b842-7f5b38bfd9fd"
+    }
+  ]
+}

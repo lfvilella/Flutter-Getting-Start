@@ -5,6 +5,7 @@ import HomeScreen from './src/screens/HomeScreen.js';
 import ComponentsScreen from './src/screens/ComponentsScreen.js';
 import ListScreen from './src/screens/ListScreen.js';
 import ImageScreen from './src/screens/ImageScreen.js';
+import CounterScreen from './src/screens/CounterScreen.js';
 
 
 const Stack = createStackNavigator();
@@ -28,6 +29,10 @@ function App() {
         <Stack.Screen
           name="Image"
           component={ImageScreen}
+        />
+        <Stack.Screen
+          name="Counter"
+          component={CounterScreen}
         />
       </Stack.Navigator>
     </NavigationContainer>

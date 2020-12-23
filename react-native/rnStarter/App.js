@@ -8,6 +8,7 @@ import ImageScreen from './src/screens/ImageScreen.js';
 import CounterScreen from './src/screens/CounterScreen.js';
 import ColorScreen from './src/screens/ColorScreen.js';
 import SquareScreen from './src/screens/SquareScreen.js';
+import SquareScreenWithReducer from './src/screens/SquareScreenWithReducer.js';
 
 
 const Stack = createStackNavigator();
@@ -44,6 +45,11 @@ function App() {
         <Stack.Screen
           name="Square"
           component={SquareScreen}
+        />
+
+        <Stack.Screen
+          name="SquareReducer"
+          component={SquareScreenWithReducer}
         />
       </Stack.Navigator>
     </NavigationContainer>

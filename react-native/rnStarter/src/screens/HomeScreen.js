@@ -37,6 +37,13 @@ const HomeScreen = ({ navigation }) => {
         title="Go to Square Demo"
         onPress={() => navigation.navigate('Square')}
       />
+
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.navigate('SquareReducer')}
+      >
+        <Text style={styles.buttonText}>Go to Square With Reducer Demo</Text>
+      </TouchableOpacity>
     </View>
   );
 };
